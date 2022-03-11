@@ -235,7 +235,7 @@ class GCSFilesStore:
         blob = self.bucket.blob(self.prefix + path)
         blob.cache_control = self.CACHE_CONTROL
         blob.metadata = {k: str(v) for k, v in (meta or {}).items()}
-        timeout_setting = info.spider.crawler.get("DOWNLOAD_TIMEOUT") if info and info.spider else None
+        timeout_setting = info.spider.crawler.settings.get("DOWNLOAD_TIMEOUT") if info and info.spider else None
         return threads.deferToThread(
             blob.upload_from_string,
             data=buf.getvalue(),
